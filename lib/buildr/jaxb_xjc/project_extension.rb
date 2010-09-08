@@ -1,48 +1,28 @@
-require 'buildr'
-require 'buildr/java'
-require 'buildr/java/ant'
-
-# Wrapped JAXB-XJC compiler
-# https://jaxb.dev.java.net/nonav/2.2.1/docs/xjcTask.html
-
 module Buildr
   module JaxbXjc
+    def compile_jaxb(files, *args)
+      options = Hash === args.last ? args.pop.dup : {}
+      rake_check_options options, :directory, :keep_content, :package, :id
+      args = args.dup
+      files = Array === files ? files.flatten : [files]
 
-    VERSION = "2.2.1"
+      target_dir = options[:directory] || path_to(:target, :generated, :jaxb)
+      timestamp_file = File.expand_path("#{target_dir}/jaxb-#{options[:id] || 1}.cache")
 
-    REQUIRES = ["javax.xml.bind:jaxb-api:jar:#{VERSION}",
-                "com.sun.xml.bind:jaxb-impl:jar:#{VERSION}",
-                "com.sun.xml.bind:jaxb-xjc:jar:#{VERSION}"]
-
-    class << self
-      def doWork(options)
-        outdir = options[:outdir]
-        schemafile = options[:schemafile]
-        package = options[:package]
-
-        pkgdir = outdir + '/' + package.gsub('.', '/')
-        mkdir_p pkgdir.to_s
-
-        file(outdir) do |dir|
-          mkdir_p dir.to_s
-          Buildr.ant('xjc') do |ant|
-            ant.taskdef :name=>"xjc", :classname=>"com.sun.tools.xjc.XJCTask", :classpath=>requires.join(File::PATH_SEPARATOR)
-            ant.xjc :schema=>schemafile, :destdir=>dir, :package=>package, :removeOldOutput=>'yes' do
-              ant.produces :dir => pkgdir, :includes => '**/*.java'
-            end
-          end
-        end
+      file(target_dir => timestamp_file)
+      
+      file(timestamp_file => files.flatten) do |task|
+        rm_rf target_dir unless options[:keep_content]
+        mkdir_p target_dir 
+        args << "-d" << target_dir
+        args << "-p" << options[:package] if options[:package]
+        args += files.collect{|f| f.to_s} 
+        JaxbXjc.xjc args
+        touch timestamp_file
       end
 
-      def requires
-        @requires ||= Buildr.artifacts(REQUIRES).each { |artifact| artifact.invoke }.map(&:to_s)
-      end
+      target_dir
     end
-
-    def compile_jaxb(options = {})
-      JAXB_XJC.doWork jaxb_opts.merge(options)
-    end
-
   end
 
   class Project
