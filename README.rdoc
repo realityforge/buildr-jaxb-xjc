@@ -1,0 +1,32 @@
+= Intellij IDEA support for buildr
+
+This extension provides ...
+
+  require 'jaxb-xjc'
+
+  ...
+
+  define 'my-project' do
+    compile.from compile_jaxb :outdir => _('target/generated-sources/xjc'),
+                        :schemafile => _("src/main/resources/api.xsd"),
+                         :package => "org.foo.api"
+    package :jar
+  end
+
+
+== Installation
+
+The extension is packaged as a gem named "buildr-jaxb-xjc", consult the ruby gems installation
+steps but typically it is either
+
+  sudo gem install buildr-jaxb-xjc
+
+for MRI ruby or
+
+  jgem install buildr-jaxb-xjc
+
+for jruby.
+
+The user then needs to add the following require into the build file:
+
+  require 'buildr_jaxb_xjc'
