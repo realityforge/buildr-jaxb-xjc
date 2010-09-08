@@ -1,7 +1,8 @@
 = JAXB XJC builder extension
 
 This extension provides the ability to invoke jaxb xjc binding
-compiler xjc. A simple example of it's use follows; 
+compiler. A typical project that uses the extension may look
+something like; 
 
   require 'buildr_jaxb_xjc'
 
@@ -19,12 +20,12 @@ passed to the underlying XJC compiler. The arguments are documented at [1]
 on the jaxb site. If the last argument is an options hash then the extension
 handles these specially. The supported options include:
 
- * <tt>:directory</tt>: The directory to which source is generated. Defaults
-   to <tt>_(:target, :generated, :jaxb)</tt>
- * <tt>:keep_content</tt>: By default the generated directory will be deleted.
-   If <tt>true</tt> is specified for this parameter the directory will not be
-   deleted.
- * <tt>:package</tt>: The package in which the source is generated.
+* <tt>:directory</tt>: The directory to which source is generated. Defaults
+  to <tt>_(:target, :generated, :jaxb)</tt>
+* <tt>:keep_content</tt>: By default the generated directory will be deleted.
+  If <tt>true</tt> is specified for this parameter the directory will not be
+  deleted.
+* <tt>:package</tt>: The package in which the source is generated.
 
 [1] https://jaxb.dev.java.net/nonav/2.2.1/docs/xjc.html
 
