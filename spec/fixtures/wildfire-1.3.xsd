@@ -1,0 +1,76 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+  <xsd:simpleType name="agency">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="DSE"/>
+      <xsd:enumeration value="PV"/>
+      <xsd:enumeration value="CFA"/>
+      <xsd:enumeration value="DPI"/>
+      <xsd:enumeration value="VF"/>
+      <xsd:enumeration value="Unknown"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="latLongCoordinate">
+    <xsd:all>
+      <xsd:element name="latitude" type="xsd:float"/>
+      <xsd:element name="longitude" type="xsd:float"/>
+    </xsd:all>
+  </xsd:complexType>
+
+  <xsd:element name="wildfire">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="name" type="xsd:string"/>
+        <xsd:element name="district" type="xsd:string">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+              The name of the district WITHOUT the "FIRE DISTRICT" suffix.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="status">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+              <xsd:enumeration value="GOING"/>
+              <xsd:enumeration value="CONTAINED"/>
+              <xsd:enumeration value="UNDER CONTROL - 1"/>
+              <xsd:enumeration value="UNDER CONTROL - 2"/>
+              <xsd:enumeration value="SAFE"/>
+              <xsd:enumeration value="SAFE - OVERRUN"/>
+              <xsd:enumeration value="SAFE - NOT FOUND"/>
+              <xsd:enumeration value="SAFE - FALSE ALARM"/>
+              <xsd:enumeration value="NOT FOUND"/>
+              <xsd:enumeration value="UNKNOWN"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="reported-at" type="xsd:dateTime"/>
+        <xsd:element name="lead-agency" type="xsd:string"/>
+        <xsd:element name="origin" type="latLongCoordinate" minOccurs="0">
+          <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+              This is a grid reference in lat/long format.
+            </xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="area" type="xsd:decimal" minOccurs="0"/>
+        <xsd:element name="number">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:integer">
+              <xsd:minInclusive value="0"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="global-id">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:integer">
+              <xsd:minInclusive value="0"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="data-source" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
