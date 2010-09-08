@@ -21,7 +21,7 @@ module Buildr
       end
 
       def xjc(*args)
-        cp = Buildr.artifacts(self.requires).each(&:invoke).map(&:to_s).join(File::PATH_SEPARATOR)
+        cp = Buildr.artifacts(self.requires).each(&:invoke).map(&:to_s)
         Java::Commands.java 'com.sun.tools.xjc.XJCFacade', *(args + [{ :classpath => cp }])
       end
     end
