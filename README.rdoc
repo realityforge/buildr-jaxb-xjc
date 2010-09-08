@@ -16,9 +16,10 @@ something like;
 
 The method compile_jaxb accepts either an array of files or a single
 file as the first parameter. It then accepts 0 or more arguments that are
-passed to the underlying XJC compiler. The arguments are documented at [1]
-on the jaxb site. If the last argument is an options hash then the extension
-handles these specially. The supported options include:
+passed to the underlying XJC compiler. The arguments are documented at
+https://jaxb.dev.java.net/nonav/2.2.1/docs/xjc.html on the jaxb site.
+If the last argument is an options hash then the extension handles these
+specially. The supported options include:
 
 * <tt>:directory</tt>: The directory to which source is generated. Defaults
   to <tt>_(:target, :generated, :jaxb)</tt>
@@ -26,8 +27,6 @@ handles these specially. The supported options include:
   If <tt>true</tt> is specified for this parameter the directory will not be
   deleted.
 * <tt>:package</tt>: The package in which the source is generated.
-
-[1] https://jaxb.dev.java.net/nonav/2.2.1/docs/xjc.html
 
 == Installation
 
