@@ -2,7 +2,6 @@ require 'rake'
 require 'rake/rdoctask'
 require 'rake/gempackagetask'
 require 'spec/rake/spectask'
-require File.expand_path( File.dirname(__FILE__) + "/lib/buildr/jaxb_xjc/version")
 
 begin
   require 'rubygems'
