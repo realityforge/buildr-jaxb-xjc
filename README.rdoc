@@ -1,3 +1,8 @@
+= Warning
+
+The extension has been integrated into buildr 1.4.5 and will be deprecated 
+once the 1.4.5 version of buildr is released.
+
 = JAXB XJC builder extension
 
 This extension provides the ability to invoke jaxb xjc binding
